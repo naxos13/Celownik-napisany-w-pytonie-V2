@@ -413,4 +413,4 @@ def run_all():
 if __name__ == "__main__":
     run_all()
 
-# Komenda do włączania celownika: python Celownik_python_V2.py
+# Komenda do włączania celownika z konsoli: python Celownik_python_V2.py
