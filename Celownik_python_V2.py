@@ -13,11 +13,11 @@ from PIL import Image
 from pystray import Icon, MenuItem, Menu
 
 
-# ---------- POMOCNICZE ŚCIEŻKI (PyInstaller) ----------
+# ---------- AUXILIARY PATHS / ŚCEIŻKI POMOCZNICZE (PyInstaller) ----------
 
 def resource_path(relative_path: str) -> str:
     """
-    Zwraca ścieżkę do zasobów zarówno w trybie .py, jak i w .exe (PyInstaller).
+    Zwraca ścieżkę do zasobów zarówno w trybie .py, jak i w .exe (PyInstaller). / Returns the path to resources both in .py mode and in the .exe version (PyInstaller).
     """
     if hasattr(sys, "_MEIPASS"):
         return os.path.join(sys._MEIPASS, relative_path)
@@ -98,13 +98,13 @@ class BITMAPINFOHEADER(ctypes.Structure):
 def show_splash():
     path = SPLASH_FILE  # już pełna ścieżka dzięki resource_path
     if not os.path.isfile(path):
-        print(f"[SPLASH] Brak pliku splash: {path}")
+        print(f"[SPLASH] Missing splash file: {path}")
         return
 
     try:
         img = Image.open(path).convert("RGBA")
     except Exception as e:
-        print(f"[SPLASH] Nie udało się wczytać splash.png: {e}")
+        print(f"[SPLASH] Failed to load splash.png: {e}")
         return
 
     w, h = img.size
@@ -254,7 +254,7 @@ class DotOverlay:
         )
 
         win32gui.ShowWindow(self.hwnd, win32con.SW_SHOW)
-        print("[FINAL] Overlay utworzony")
+        print("[FINAL] Overlay created")
 
     def _wnd_proc(self, hwnd, msg, wparam, lparam):
         if msg == win32con.WM_PAINT:
@@ -371,11 +371,11 @@ class TrayManager:
 # ---------------- HOTKEYS ----------------
 
 def listen_hotkeys(overlay: DotOverlay, tray: TrayManager):
-    print("[FINAL] Rejestruję ALT+1 (toggle), ALT+Q (exit)")
+    print("[FINAL] Registering ALT+1 (toggle), ALT+Q (exit)")
     keyboard.add_hotkey("alt+1", overlay.toggle)
 
     def _exit():
-        print("[FINAL] ALT+Q — wyjście")
+        print("[FINAL] ALT+Q — exit")
         stop_event.set()
         tray.exit()
 
@@ -387,7 +387,7 @@ def listen_hotkeys(overlay: DotOverlay, tray: TrayManager):
 
 def run_all():
     show_splash()
-    print("[FINAL] Start programu")
+    print("[FINAL] Program start ")
 
     overlay = DotOverlay()
     tray = TrayManager(overlay)
@@ -400,13 +400,13 @@ def run_all():
     )
     t_hot.start()
 
-    print("[FINAL] Program działa — oczekiwanie na zdarzenia")
+    print("[FINAL] The program is running — waiting for events.")
 
     while not stop_event.is_set():
         win32gui.PumpWaitingMessages()
         time.sleep(0.01)
 
-    print("[FINAL] Koniec programu")
+    print("[FINAL] End of the program")
     overlay.close()
 
 
