@@ -352,8 +352,8 @@ class TrayManager:
             img = Image.open(icon_path).convert("RGBA")
 
         menu = Menu(
-            MenuItem("Pokaż/Ukryj", lambda icon, item: self.overlay.toggle()),
-            MenuItem("Zakończ", lambda icon, item: self.exit()),
+            MenuItem("Show/Hide", lambda icon, item: self.overlay.toggle()),
+            MenuItem("Close", lambda icon, item: self.exit()),
         )
 
         self.icon = Icon("Celownik", img, "Celownik", menu)
